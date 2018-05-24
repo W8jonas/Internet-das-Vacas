@@ -1,0 +1,22 @@
+
+providenciar dados placa WeMos D1 mini  {
+   V	Tensão max   -->> RT9013 -> datasheet
+   V	Tensão do microcontrolador - 3.3V
+
+}
+
+
+codigo de teste {
+   V	LEDs funcionais
+   V	Codigos de processamento
+   mA/h da placa
+}
+
+
+tabela {
+   V	Média ponderada das caracteristicas -> relatorio
+   V	referências bibliográficas -> relatorio
+   preencher tabela - 3 resultados dos testes das bateria
+   F	providenciar informações sobre o preço das RONTEKs [Somente empresas]
+}
+
