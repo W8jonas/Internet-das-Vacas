@@ -1,2 +1,0 @@
-.gitignore
-versoes antigas.zip
