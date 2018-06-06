@@ -1,6 +1,0 @@
-Relatório {
-   Sublinhado e destacado de azul toda refefência no relatório ?
-   Constar código fonte dos testes no relatório ? Anexo ou referência ou outro...
-   fonte - times new roman - 12
-   
-}
