@@ -1,13 +1,13 @@
 
 #define Output_1 D4
-#define Output_2 0
-#define Output_3 4
-#define Output_4 5
-#define Output_5 15
-#define Output_6 13
-#define Output_7 12
-#define Output_8 14
-#define entrada_botao 16
+#define Output_2 D3
+#define Output_3 D5
+#define Output_4 D1
+#define Output_5 D8
+#define Output_6 D7
+#define Output_7 D6
+#define Output_8 D0
+#define entrada_botao D2
 
 void funcao__();
 void funcao_0();
@@ -15,11 +15,9 @@ void funcao_1();
 void funcao_2();
 void funcao_3();
 void funcao_4();
-void funcao_5();
-void funcao_6();
-void funcao_7();
 
 int operacao = 0;
+boolean leitura = true;
 
 void setup() {
    pinMode (Output_1, OUTPUT);
@@ -30,28 +28,44 @@ void setup() {
    pinMode (Output_6, OUTPUT);
    pinMode (Output_7, OUTPUT);
    pinMode (Output_8, OUTPUT);
-   pinMode (entrada_botao, INPUT_PULLUP);
+   pinMode (entrada_botao, INPUT);
+   Serial.begin(115200);
 }
-
 
 void loop() {
+  leitura = digitalRead(entrada_botao);
+  if (leitura == LOW ){
+     operacao++;
+     delay(500);
+  }
    switch (operacao){
-      case 0: funcao__(); break;  // desliga todos os LEDs
-      case 1: funcao_0(); break;  // liga 1 LED 
-      case 2: funcao_1(); break;  // liga todos os 8 LEDs
-      case 3: funcao_2(); break;  // executa operações aritméticas
-      case 4: funcao_3(); break;  // executa as operações aritméticas com 1 LED ligado
-      case 5: funcao_4(); break;  // executa as operações aritméticas com todos os LEDs ligados
-      case 6: funcao_5(); break;  // entra em modo SLEEP
-      case 7: funcao_6(); break;  // entra em modo DEEP-SLEEP
-      case 8: funcao_7(); break;
-   }
-   delay(500);
-   operacao++;
-   if ( operacao > 8 ) operacao = 0;
-   
+      case 0: 
+         funcao__(); 
+         break;  // desliga todos os LEDs
+      case 1: 
+         funcao_0(); 
+         break;  // liga 1 LED 
+      case 2: 
+         funcao_1(); 
+         break;  // liga todos os 8 LEDs
+      case 3: 
+         funcao_2(); 
+         break;  // executa operações aritméticas
+      case 4: 
+         funcao_3(); 
+         break;  // executa as operações aritméticas com 1 LED ligado
+      case 5: 
+         funcao_4(); 
+         break;  // executa as operações aritméticas com todos os LEDs ligados
+      case 6:
+      default:
+         operacao=0; 
+         break;  // Volta com o valor 0 para a variavel operacao
+   }  
 }
+
 void funcao__ (){
+   Serial.println("funcao 00 ");
    digitalWrite(Output_1, LOW);
    digitalWrite(Output_2, LOW);
    digitalWrite(Output_3, LOW);
@@ -63,10 +77,12 @@ void funcao__ (){
 }
 
 void funcao_0() {
+   Serial.println("funcao 0 ");
    digitalWrite(Output_1, HIGH);
 }
 
 void funcao_1() {
+   Serial.println("funcao 1 ");
    digitalWrite(Output_1, HIGH);
    digitalWrite(Output_2, HIGH);
    digitalWrite(Output_3, HIGH);
@@ -78,6 +94,7 @@ void funcao_1() {
 }
 
 void funcao_2() {
+   Serial.println("funcao 2 ");
    digitalWrite(Output_1, LOW);
    digitalWrite(Output_2, LOW);
    digitalWrite(Output_3, LOW);
@@ -98,6 +115,7 @@ void funcao_2() {
 }
 
 void funcao_3() {
+   Serial.println("funcao 3 ");
    digitalWrite(Output_1, HIGH);
    int cont = 1;
    float resp = 1;
@@ -111,6 +129,7 @@ void funcao_3() {
 }
 
 void funcao_4() {
+   Serial.println("funcao 4 ");
    digitalWrite(Output_1, HIGH);
    digitalWrite(Output_2, HIGH);
    digitalWrite(Output_3, HIGH);
@@ -129,20 +148,4 @@ void funcao_4() {
       yield();
   }
 }
-
-void funcao_5() {
-   
-   
-}
-
-void funcao_6() {
-   
-   
-}
-
-void funcao_7() {
-   
-   
-}
-
 
