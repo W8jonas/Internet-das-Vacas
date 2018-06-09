@@ -1,13 +1,13 @@
 
-#define Output_1 D4
-#define Output_2 D3
-#define Output_3 D5
-#define Output_4 D1
-#define Output_5 D8
-#define Output_6 D7
-#define Output_7 D6
-#define Output_8 D0
-#define entrada_botao D2
+#define Output_1 D8
+#define Output_2 D7
+#define Output_3 D6
+#define Output_4 D5
+#define Output_5 D4
+#define Output_6 D3
+#define Output_7 D2
+#define Output_8 D1
+#define entrada_botao D0
 
 void funcao__();
 void funcao_0();
@@ -34,6 +34,7 @@ void setup() {
 
 void loop() {
   leitura = digitalRead(entrada_botao);
+  Serial.println(leitura);
   if (leitura == LOW ){
      operacao++;
      delay(500);
