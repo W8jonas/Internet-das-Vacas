@@ -1,4 +1,25 @@
 
+//  Internet das Vacas código 3
+//  Autor: Jonas Henriquee Nascimento
+//  PIBIC-Junior
+//
+//  Data de início: 04/06/2018
+//  Data da ultima atualização: 09/06/2018
+//  Data de término: XX/XX/XX
+//  
+//  O código tem como objetivo estabelecer 6 funções diferentes para o arduino
+//  executar cada uma delas de moto paralelo. Essas funções são escolhidas através 
+//  de um botão que toda que apertado faz com que o código execute a função seguinte
+//  A primeira função, que é executada junto ao ESP quando é ligado deixa todos os
+//  LEDs desligados e o ESP em modo de standby. A segunda função, liga somente um
+//  dos LEDs. A terceira, por sua vez, liga todos os 8 LEDs. A próxima função 
+//  executa uma série de operações aritméticas, com todos os LEDs desligados. Já a 
+//  função 5 executa as mesmas operações aritméticas, mas com 1 dos LEDs ligados. 
+//  De tal forma é feito na 6 função, no qual são executadas as operações matemáticas,
+//  mas com todos os LEDs ligados.
+
+
+
 #define Output_1 D8
 #define Output_2 D7
 #define Output_3 D6
