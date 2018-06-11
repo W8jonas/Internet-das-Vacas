@@ -1,0 +1,19 @@
+  WiFi.mode(WIFI_STA);  normal -> client only mode
+  WiFi.mode(WIFI_AP);   maior consumo -> client and server
+  WiFi.mode(WIFI_OFF);  wifi desligado - modem sleep
+
+
+  WiFi.forceSleepBegin();
+  funções ---
+  WiFi.forceSleepWake();
+
+
+  ESP.deepSleep(tempo , WAKE_RF_DEFAULT);
+  delay(100);
+
+
+  wifi_set_sleep_type(LIGHT_SLEEP_T);{
+  delay - entra em sleep light
+
+
+soft-AP so suporta o 802.11g

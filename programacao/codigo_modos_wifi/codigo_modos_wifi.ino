@@ -1,27 +1,29 @@
-
-//  Internet das Vacas código 2
-//  Autor: Jonas Henriquee Nascimento
-//  PIBIC-Junior
-//
-//  Data de início: 09/06/2018
-//  Data da ultima atualização: 10/06/2018
-//  Data de término: XX/XX/XX
-//  
-//  Tem o objetivo de estabelecer modelos de operação de economia de energia.
-//  Sendo, no total, 6 funções. A primeira, abilita o ESP em modo standby, a 
-//  qual nao realiza nenhuma função. Já a segunda, abilita o ESP a trabalhar
-//  em modo client e server ao mesmo tempo. De modo semelhante, a função 3
-//  abilita o ESP a trabalhar somente em modo client. A partir da funcao_3
-//  o ESP recebe sua configuração voltada realmente a economia de energia. 
-//  Sendo o primeiro modelo, o light sleep com a cpu ainda ativa para ser 
-//  inicializada rapidamente. Em contrapartida a próxima função realiza
-//  o light sleep, todavia com a dpu desativada, sendo a unica maneira de
-//  retornar ao estado de funcionamento do ESP por uma interrupção externa.
-//  Por fim, o modelo mais economico, o Deep sleep, a qual deixa o ESP quase
-//  que inteiramente desligado por um período de tempo definido pelo programador.
-//  Toda via, esse modelo requer uma pequena modificação na placa, a qual deverá
-//  constar um jump que interlique a GPIO D0 ao pino Reset do ESP.
-
+/*
+ * 
+ * Internet das Vacas código 2
+ *  Autor: Jonas Henriquee Nascimento
+ *  PIBIC-Junior
+ * 
+ *  Data de início: 09/06/2018
+ *  Data da ultima atualização: 10/06/2018
+ *  Data de término: XX/XX/XX
+ *  
+ *  Tem o objetivo de estabelecer modelos de operação de economia de energia.
+ *  Sendo, no total, 6 funções. A primeira, abilita o ESP em modo standby, a 
+ *  qual nao realiza nenhuma função. Já a segunda, abilita o ESP a trabalhar
+ *  em modo client e server ao mesmo tempo. De modo semelhante, a função 3
+ *  abilita o ESP a trabalhar somente em modo client. A partir da funcao_3
+ *  o ESP recebe sua configuração voltada realmente a economia de energia. 
+ *  Sendo o primeiro modelo, o light sleep com a cpu ainda ativa para ser 
+ *  inicializada rapidamente. Em contrapartida a próxima função realiza
+ *  o light sleep, todavia com a dpu desativada, sendo a unica maneira de
+ *  retornar ao estado de funcionamento do ESP por uma interrupção externa.
+ *  Por fim, o modelo mais economico, o Deep sleep, a qual deixa o ESP quase
+ *  que inteiramente desligado por um período de tempo definido pelo programador.
+ *  Toda via, esse modelo requer uma pequena modificação na placa, a qual deverá
+ *  constar um jump que interlique a GPIO D0 ao pino Reset do ESP.
+ * 
+*/
 
 #include <ESP8266WiFi.h>
 
