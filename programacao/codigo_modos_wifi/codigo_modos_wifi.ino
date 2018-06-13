@@ -74,7 +74,7 @@ void loop() {
          funcao_3(); 
          break;  // Esp em modo light - sleep com cpu ativa
       case 5: 
-        // funcao_4(); 
+         funcao_4(); 
          break;  // Esp em light - sleep cpu desligada OBS: Para que se possa chegar no deep sleep é preciso comentar a chamada da funcao_4.
       case 6:
          funcao_5();

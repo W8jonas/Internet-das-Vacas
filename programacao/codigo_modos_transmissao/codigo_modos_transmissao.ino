@@ -7,8 +7,8 @@ extern "C" {
   #include "user_interface.h"
 }
 
-const char* ssid = "76616920746F6D6172206E6F206375";
-const char* password = "chutaqualquernumeroai";
+const char* ssid = "esp8266";
+const char* password = "1234567890";
 
 ESP8266WebServer server(80);
 
@@ -43,7 +43,7 @@ void setup(void){
 
   
   WiFi.setPhyMode(WIFI_PHY_MODE_11G);
-  WiFi.setOutputPower(2.5);
+  WiFi.setOutputPower(20.5);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
@@ -54,10 +54,12 @@ void setup(void){
    wifi_set_user_fixed_rate(1, 54);
    
   Serial.println("");
-
+  int contador = 0;
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
+    contador ++;
+    delay(50);
+    Serial.print("tentativa numero: ");
+    Serial.println(contador);
   }
   Serial.println("");
   Serial.print("Conectando em: ");
