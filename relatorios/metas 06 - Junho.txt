@@ -20,7 +20,7 @@ relatório{
  V link GITHUB  // atualizar para novo código de programa
  V referenciar a placa construida e o programa
    tabelas{
-      Completar tabela consumo da placa
+ V    Completar tabela consumo da placa
       Nova tabela comparativa com valores de outros modelos e datasheets
       Comparação com GPS, bluetooth, wifi, lora e GPS
    }
