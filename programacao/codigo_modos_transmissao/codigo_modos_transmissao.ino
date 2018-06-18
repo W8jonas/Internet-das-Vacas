@@ -40,19 +40,18 @@ void handleNotFound(){
 
 void setup(void){
   Serial.begin(115200);
-
   
-  WiFi.setPhyMode(WIFI_PHY_MODE_11G);
-  WiFi.setOutputPower(20.5);
+  WiFi.setPhyMode(WIFI_PHY_MODE_11N);
+  WiFi.setOutputPower(14);
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
 
 //wifi_set_user_fixed_rate;
 //wifi_set_user_sup_rate;
 //wifi_set_user_rate_limit;
-  
+
    wifi_set_user_fixed_rate(1, 54);
-   
+
   Serial.println("");
   int contador = 0;
   while (WiFi.status() != WL_CONNECTED) {
@@ -66,7 +65,6 @@ void setup(void){
   Serial.println(ssid);
   Serial.print("IP: ");
   Serial.println(WiFi.localIP());
-
 
   server.on("/", handleRoot);
 
