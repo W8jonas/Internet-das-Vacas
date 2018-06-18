@@ -8,8 +8,8 @@ projetar{
 
 
 ações{
-   medir valor de consumo da placa --> 2 modelos para medir
-   providenciar contato com a Rontek
+ V  medir valor de consumo da placa --> 2 modelos para medir
+ VF providenciar contato com a Rontek
 }
 
 
