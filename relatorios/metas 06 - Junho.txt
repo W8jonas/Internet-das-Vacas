@@ -1,17 +1,14 @@
 
-
 projetar{
-   novo circuito de transmissão de sinal --> esquemático + programação
-   finalizar circuito anterior
+ V novo circuito de transmissão de sinal --> esquemático + programação
+ V finalizar circuito anterior
 }
-
 
 
 ações{
- V  medir valor de consumo da placa --> 2 modelos para medir
- VF providenciar contato com a Rontek
+ V medir valor de consumo da placa --> 2 modelos para medir
+ V providenciar contato com a Rontek
 }
-
 
 
 relatório{
@@ -23,6 +20,9 @@ relatório{
  V    Completar tabela consumo da placa
       Nova tabela comparativa com valores de outros modelos e datasheets
       Comparação com GPS, bluetooth, wifi, lora e GPS
+      Tabela ou gráfico com autonomia
    }
+   Texto comparando os que mais gastaram e os que menos gastaram
 }
+
 
