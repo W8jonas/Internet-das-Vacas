@@ -1,18 +1,26 @@
 
-
-//  Internet das Vacas código 2
-//  Autor: Jonas Henriquee Nascimento
-//  PIBIC-Junior
-//
-//  Data de início: 06/04/2018
-//  Data da ultima atualização: 13/05/2018
-//  Data de término: XX/XX/XX
-//  
-//  Tem o objetivo de estabelecer um servidor dentro do ESP que possibilite ligar 8 LEDs independentes e optar por 2 estados de processamento;
-//  O primeiro, a qual não será realizado nenhuma operação adicional além do próprio servidor.
-//  No segundo, o processador, além de manter o próprio servidor, executará contas aritméticas adicinais afim de se usar 100% da CPU.
-//  O propósito do programa é a relaziação dos teste com relação ao consumo da placa.
-
+/*
+ * Instituto Federal de Educação, Ciência e Tecnologia Minas Gerais
+ * IFMG - Campus Avançado Conselheiro Lafaiete 
+ * 
+ * Internet das Vacas código 2
+ * Autor: Jonas Henrique Nascimento
+ * PIBIC-Junior
+ * 
+ * Data de início: 06/04/2018
+ * Data da ultima atualização: 13/05/2018
+ * Data de término: 13/05/2018
+ * 
+ * Tem o objetivo de estabelecer um servidor dentro do ESP que possibilite ligar 8 LEDs independentes e optar por 2 estados de processamento;
+ * O primeiro, a qual não será realizado nenhuma operação adicional além do próprio servidor.
+ * No segundo, o processador, além de manter o próprio servidor, executará contas aritméticas adicinais afim de se usar 100% da CPU.
+ * O propósito do programa é a relaziação dos teste com relação ao consumo da placa.
+ *
+ *  Este código está disponível sempre no endereço abaixo, para livre aperfeiçoamento. 
+ *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
+ *  originais, tão bem quanto o nome da instituição.
+ *  
+*/
 
 
 #include <ESP8266WiFi.h>
@@ -45,7 +53,6 @@ int condicao = 2;
 void setup(){
     Serial.begin(115200);
 
-
     Serial.println();
     Serial.print("Conectando a ");
     Serial.println(ssid);
@@ -63,9 +70,7 @@ void setup(){
     server.begin();
     Serial.println("Server iniciado");
 
-
     Serial.println(WiFi.localIP());
-
     
     for (int nP=0; nP < qtdePinosDigitais; nP++) {
         pinMode(pinosDigitais[nP], modoPinos[nP]);
@@ -98,7 +103,6 @@ void loop(){
                         //Conteudo da Página HTML
                         client.println("<!DOCTYPE html>");
                         client.println("<html>");
-
 
                         client.println("<head>");
                         client.println("<title>Servidor de teste</title>");
@@ -141,8 +145,6 @@ void loop(){
                         client.println("<body onload=\"LeDadosDoArduino()\">");                                     
                         client.println("<h1>Porta analogica</h1>");
 
-
-                        
                         client.println("<br/>");                        
                         client.println("<h1>PORTAS digitais</h1>");
                         client.println("<form method=\"get\">");

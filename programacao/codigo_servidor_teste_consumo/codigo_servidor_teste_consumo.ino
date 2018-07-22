@@ -1,3 +1,6 @@
+
+
+
 #include <ESP8266WiFi.h>
 
 const char* ssid = "82668266";
@@ -53,7 +56,6 @@ void setup(){
 
 void loop()
 {
-
     WiFiClient  client = server.available();
 
     if (client) { 

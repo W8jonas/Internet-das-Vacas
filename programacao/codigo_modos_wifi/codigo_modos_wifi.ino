@@ -1,12 +1,15 @@
+
 /*
+ * Instituto Federal de Educação, Ciência e Tecnologia Minas Gerais
+ * IFMG - Campus Avançado Conselheiro Lafaiete 
  * 
- * Internet das Vacas código 2
- *  Autor: Jonas Henriquee Nascimento
+ *  Internet das Vacas código 3
+ *  Autor: Jonas Henrique Nascimento
  *  PIBIC-Junior
  * 
- *  Data de início: 09/06/2018
- *  Data da ultima atualização: 10/06/2018
- *  Data de término: XX/XX/XX
+ *  Data de início: 05/06/2018
+ *  Data da ultima atualização: 22/07/2018
+ *  Data de término: 10/06/2018
  *  
  *  Tem o objetivo de estabelecer modelos de operação de economia de energia.
  *  Sendo, no total, 6 funções. A primeira, abilita o ESP em modo standby, a 
@@ -23,6 +26,10 @@
  *  Toda via, esse modelo requer uma pequena modificação na placa, a qual deverá
  *  constar um jump que interlique a GPIO D0 ao pino Reset do ESP.
  * 
+ *  Este código está disponível sempre no endereço abaixo, para livre aperfeiçoamento. 
+ *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
+ *  originais, tão bem quanto o nome da instituição.
+ *  
 */
 
 #include <ESP8266WiFi.h>
