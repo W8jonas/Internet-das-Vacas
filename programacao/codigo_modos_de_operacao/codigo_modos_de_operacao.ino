@@ -60,30 +60,9 @@ void loop() {
      operacao++;
      delay(500);
   }
-   switch (operacao){
-      case 0: 
-         funcao__(); 
-         break;  // desliga todos os LEDs
-      case 1: 
-         funcao_0(); 
-         break;  // liga 1 LED 
-      case 2: 
-         funcao_1(); 
-         break;  // liga todos os 8 LEDs
-      case 3: 
-         funcao_2(); 
-         break;  // executa operações aritméticas
-      case 4: 
-         funcao_3(); 
-         break;  // executa as operações aritméticas com 1 LED ligado
-      case 5: 
-         funcao_4(); 
-         break;  // executa as operações aritméticas com todos os LEDs ligados
-      case 6:
-      default:
-         operacao=0; 
-         break;  // Volta com o valor 0 para a variavel operacao
-   }  
+
+  funcao_2(); 
+
 }
 
 void funcao__ (){
