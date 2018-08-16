@@ -8,14 +8,14 @@
  *  PIBIC-Junior
  * 
  *  Data de início: 05/06/2018
- *  Data da ultima atualização: 22/07/2018
+ *  Data da ultima atualização: 13/08/2018
  *  Data de término: 10/06/2018
  *  
  *  Tem o objetivo de estabelecer modelos de operação de economia de energia.
  *  Sendo, no total, 6 funções. A primeira, abilita o ESP em modo standby, a 
  *  qual nao realiza nenhuma função. Já a segunda, abilita o ESP a trabalhar
  *  em modo client e server ao mesmo tempo. De modo semelhante, a função 3
- *  abilita o ESP a trabalhar somente em modo client. A partir da funcao_3
+ *  abilita o ESP a trabalhar somente em modo client. A partir da modo_light_sleep
  *  o ESP recebe sua configuração voltada realmente a economia de energia. 
  *  Sendo o primeiro modelo, o light sleep com a cpu ainda ativa para ser 
  *  inicializada rapidamente. Em contrapartida a próxima função realiza
@@ -40,13 +40,13 @@ extern "C" {
 
 #define entrada_botao D6
 
-void funcao__();
-void funcao_0();
-void funcao_1();
-void funcao_2();
-void funcao_3();
-void funcao_4();
-void funcao_5();
+void modo_standby();
+void modo_server_and_client();
+void modo_only_client();
+void modo_modem_sleep();
+void modo_light_sleep();
+void modo_light_sleep_CPU_OFF();
+void modo_DEEP_SLEEP();
 
 int operacao = 0;
 boolean leitura = true;
@@ -66,25 +66,25 @@ void loop() {
   }
    switch (operacao){
       case 0: 
-         funcao__(); 
+         modo_standby(); 
          break;  // ESP em modo standby
       case 1: 
-         funcao_0(); 
+         modo_server_and_client(); 
          break;  // ESP em modo server and client
       case 2: 
-         funcao_1(); 
+         modo_only_client(); 
          break;  // Esp em modo only client
       case 3: 
-         funcao_2(); 
+         modo_modem_sleep(); 
          break;  // Esp em modem sleep
       case 4: 
-         funcao_3(); 
+         modo_light_sleep(); 
          break;  // Esp em modo light - sleep com cpu ativa
       case 5: 
-         funcao_4(); 
-         break;  // Esp em light - sleep cpu desligada OBS: Para que se possa chegar no deep sleep é preciso comentar a chamada da funcao_4.
+         modo_light_sleep_CPU_OFF(); 
+         break;  // Esp em light - sleep cpu desligada OBS: Para que se possa chegar no deep sleep é preciso comentar a chamada da modo_light_sleep_CPU_OFF.
       case 6:
-         funcao_5();
+         modo_DEEP_SLEEP();
          break;  // Esp em deep sleep
       case 7:
       default:
@@ -93,27 +93,26 @@ void loop() {
    }
 }
 
-void funcao__ (){
+void modo_standby (){
    Serial.println("ESP em modo standby");
-   
 }
 
-void funcao_0() {
+void modo_server_and_client() {
    Serial.println("ESP em modo server and client");
    WiFi.mode(WIFI_AP);
 }
 
-void funcao_1() {
+void modo_only_client() {
    Serial.println("Esp em modo only client");
    WiFi.mode(WIFI_STA);
 }
 
-void funcao_2() {
+void modo_modem_sleep() {
    Serial.println("Esp em modem sleep");
    WiFi.mode(WIFI_OFF);
 }
 
-void funcao_3() {
+void modo_light_sleep() {
    Serial.println("Esp em modo forçado de sleep");
    wifi_fpm_open();
    WiFi.forceSleepBegin();
@@ -125,7 +124,7 @@ void funcao_3() {
    digitalWrite(LED_BUILTIN, HIGH); delay(200); digitalWrite(LED_BUILTIN, LOW); delay(200);
 }
 
-void funcao_4() {
+void modo_light_sleep_CPU_OFF() {
    Serial.println("Esp em modo Light - sleep");
    wifi_station_disconnect();
    wifi_set_opmode(NULL_MODE);
@@ -137,7 +136,7 @@ void funcao_4() {
    delay(100);
 }
 
-void funcao_5() {
+void modo_DEEP_SLEEP() {
    Serial.println("Esp em deep sleep");
    ESP.deepSleep(10000000 , WAKE_RF_DEFAULT);
    delay(100);
