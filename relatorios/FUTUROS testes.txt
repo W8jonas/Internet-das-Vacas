@@ -1,0 +1,5 @@
+56 des   // 10 min // 15 // 30 // 45 // 
+2 sec trans
+2 sec proc
+
+
