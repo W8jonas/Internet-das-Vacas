@@ -33,38 +33,36 @@
 */
 
 
-#include <ESP8266WiFi.h>
-#include <WiFiClient.h>
-#include <ESP8266WebServer.h>
-#include <ESP8266mDNS.h>
+#include <WiFi.h>
 
 #define tempo_para_desligar 25000
 #define tempo_modo_funcionamento 20000
 #define tempo_modo_funcionamento2 25000
 
-extern "C" {
-  #include "user_interface.h"
-}
 
 void modo_DEEP_SLEEP();
-void handleNotFound();
-void handleRoot();
+void Servidor_ON(unsigned long contador_interno);
 void MAX_CPU();
 
 const char* ssid = "82W8JH";
 const char* password = "w8989jonas";
 
-ESP8266WebServer server(80);
+WiFiServer server(80);
+
+
 
 void setup() {
   
    Serial.begin(115200);
    Serial.println("Inicializando o setup");
-   WiFi.setPhyMode(WIFI_PHY_MODE_11N);
-   WiFi.setOutputPower(14);
-   WiFi.mode(WIFI_STA);
+   
+ //  WiFi.setPhyMode(WIFI_PHY_MODE_11N);
+ //  WiFi.setOutputPower(14);
+ //  WiFi.mode(WIFI_STA);
+   
    WiFi.begin(ssid, password);
-   wifi_set_user_fixed_rate(1, 54);
+ //  wifi_set_user_fixed_rate(1, 54);
+   
    int contador = 0;
    
    while (WiFi.status() != WL_CONNECTED) {
@@ -72,10 +70,6 @@ void setup() {
       delay(50);
    }
 
-   server.on("/", handleRoot);
-   server.on("/inline", [] () { server.send(200, "text/plain", "this works as well"); } );
-
-   server.onNotFound(handleNotFound);
    server.begin();
    delay(500);
    
@@ -84,6 +78,7 @@ void setup() {
    Serial.println(ssid);
    Serial.print("IP: ");
    Serial.println(WiFi.localIP());
+   esp_sleep_enable_timer_wakeup(100000000);
 }
 
 
@@ -93,12 +88,13 @@ void loop() {
    
    if (valor_atual_contador < tempo_modo_funcionamento) {
       MAX_CPU();
-   }
+   } 
    
    if ((valor_atual_contador >= tempo_modo_funcionamento) && (valor_atual_contador < tempo_modo_funcionamento2)) {
-      server.handleClient();
-      handleRoot();
+      Servidor_ON(valor_atual_contador);
    }
+   
+//   client.stop();
    
    if (valor_atual_contador >= tempo_para_desligar) {
       modo_DEEP_SLEEP();
@@ -120,36 +116,50 @@ void MAX_CPU() {
   }
 }
 
+void Servidor_ON(unsigned long valor_cont){
+    
+    WiFiClient client = server.available();
+    String currentLine = "";                // make a String to hold incoming data from the client
+    while (client.connected()) {            // loop while the client's connected
+      if (client.available()) {             // if there's bytes to read from the client,
+        char c = client.read();             // read a byte, then
+        Serial.write(c);                    // print it out the serial monitor
+        if (c == '\n') {                    // if the byte is a newline character
 
-void handleRoot() {
-   Serial.println("HandleRoot");
-   String textoHTML;
-   textoHTML = " PARA DE ME COPIAR DANIELLE ";
-   server.send(200, "text/html", textoHTML);
+          // if the current line is blank, you got two newline characters in a row.
+          // that's the end of the client HTTP request, so send a response:
+          if (currentLine.length() == 0) {
+            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+            // and a content-type so the client knows what's coming, then a blank line:
+            client.println("HTTP/1.1 200 OK");
+            client.println("Content-type:text/html");
+            client.println();
+
+            // the content of the HTTP response follows the header:
+            client.print("Contador");
+            client.print(valor_cont);
+
+            // The HTTP response ends with another blank line:
+            client.println();
+            // break out of the while loop:
+            break;
+          } else {    // if you got a newline, then clear currentLine:
+            currentLine = "";
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
+        }
+
+      }
+    }
+
+
 }
-
-
-void handleNotFound(){
-   Serial.println("handleNotFound");
-   String message = "Sem arquivo\n\n";
-   message += "URI: ";
-   message += server.uri();
-   message += "\nMethod: ";
-   message += (server.method() == HTTP_GET)?"GET":"POST";
-   message += "\nArguments: ";
-   message += server.args();
-   message += "\n";
-   for (uint8_t i=0; i<server.args(); i++){
-     message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-   }
-   server.send(404, "text/plain", message);
-}
-
 
 void modo_DEEP_SLEEP() {
    Serial.println("Deep-Sleep");
    delay(500);
-   ESP.deepSleep(100000000 , WAKE_RF_DEFAULT);
+   esp_deep_sleep_start();
    delay(500);
 }
 

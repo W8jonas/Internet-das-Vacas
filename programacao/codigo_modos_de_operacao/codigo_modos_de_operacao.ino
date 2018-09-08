@@ -4,8 +4,8 @@
 //  PIBIC-Junior
 //
 //  Data de início: 04/06/2018
-//  Data da ultima atualização: 09/06/2018
-//  Data de término: XX/XX/XX
+//  Data da ultima atualização: 19/06/2018
+//  Data de término: 08/06/2018
 //  
 //  O código tem como objetivo estabelecer 6 funções diferentes para o arduino
 //  executar cada uma delas de moto paralelo. Essas funções são escolhidas através 
