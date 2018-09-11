@@ -7,9 +7,10 @@
  * Autor: Jonas Henrique Nascimento
  * PIBIC-Junior
  * 
- * Data de início: 06/09/2018
- * Data da ultima atualização: 08/09/2018
- * Data de término: 08/09/2018
+ * Data de início.................: 06/09/2018
+ * Data da ultima atualização.....: 11/09/2018
+ * Data de atualização de versão..: 11/09/2018
+ * Data de término................: 11/09/2018
  * 
  * 
  *
@@ -17,9 +18,7 @@
  *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
  *  originais, tão bem quanto o nome da instituição.
  *  
- *  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/Monitoramento_de_tensao_2/Monitoramento_de_tensao_2.ino
- *  
- */
+*/
 
 
 #include <DS3231.h>
@@ -46,10 +45,20 @@ unsigned int marcador_tempo_2 = 0;
 
 bool flag = false;
 bool flag2 = false;
+bool flag_controle_marcador_ON = false;
+bool flag_controle_marcador_OFF = false;
+bool flag_ligado = false;
 
-String erro = "sem erros ate agora";
+String texto_marcador = "string marcador";
+String dados = "string dados";
+String condicao_ = "condicao";
+
+unsigned char erro_marcador_1 = 0;
+unsigned char erro_marcador_2 = 0;
 
 void leitura();
+void marcador(String marcador);
+void gravar_dados_cartao();
 
 DS3231  rtc(SDA, SCL);
 Time  t;
@@ -73,36 +82,19 @@ void loop() {
    t = rtc.getTime();
    minuto_atual = t.min;
    
+   if ( digitalRead(10) == HIGH) {
+      condicao_ = "LIGADO";
+      marcador(condicao_);
+   } else {
+      condicao_ = "DESLIGADO";
+      marcador(condicao_);
+   }
+   
    if ( minuto_antigo != minuto_atual ){  
       minuto_antigo = minuto_atual;
       leitura();
-      datalogger = SD.open("Tensoes2.svc", FILE_WRITE);
-      if ( datalogger ) {
-         Serial.println("Atualizando datalogger");
-         Serial.print(rtc.getDateStr());
-         Serial.print("  ");
-         Serial.println(rtc.getTimeStr());
-         Serial.print("Sensor 1 - ESP 8266 bateria de 750 mAh......: ");
-         Serial.println(sensorValue);
-         Serial.print("Sensor 2 - ESP 32 bateria de 750 mAh...: ");
-         Serial.println(sensorValue2);
-         Serial.println(" ");
-//         datalogger.println("Data,Hora,sensorValue,sensorValue2,sensorValue3");
-         datalogger.print(rtc.getDateStr());
-         datalogger.print(",");
-         datalogger.print(rtc.getTimeStr());
-         datalogger.print(",");
-         datalogger.print(sensorValue);
-         datalogger.print(",");
-         datalogger.print(sensorValue2);
-         datalogger.print(",");
-         datalogger.print(erro);
-         datalogger.println(",  ");
-         datalogger.close();
-      } else {
-         Serial.println("Erro ao abrir datalogger");
-      }
-      Serial.println("Atualizado");
+      dados = texto_marcador + rtc.getDateStr() + ";" + rtc.getTimeStr() + ";" + sensorValue + ";" + sensorValue2 + ";" + erro_marcador_1 + ";" + erro_marcador_2 + ";";
+      gravar_dados_cartao();
    }
 
    sensorValuetensao = analogRead(sensortensao);
@@ -111,13 +103,10 @@ void loop() {
       flag = true;
       if( marcador_tempo_1 + 3 < minuto_atual ){
          marcador_tempo_1 = minuto_atual;
-         Serial.println("Erro no marcador 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         erro_marcador_1++;
+         Serial.println("Erro no marcador 1");
+         Serial.println(String (erro_marcador_1));
          Serial.println("  ");
-         Serial.println("Erro no marcador 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-         Serial.println("  ");
-         Serial.println("Erro no marcador 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-         Serial.println("  ");
-         erro += " ,Erro no marcador 1, ";
       }
    }
 
@@ -127,20 +116,16 @@ void loop() {
    }
 
 
-
    sensorValuetensao2 = analogRead(sensortensao2);
    sensorValuetensao2 =(sensorValuetensao2 * 3.75 ) / 843;
    if(sensorValuetensao2 > 1){
       flag2 = true;
       if( marcador_tempo_2 + 3 < minuto_atual){
          marcador_tempo_2 = minuto_atual;
-         Serial.println("Erro no marcador 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         erro_marcador_2++;
+         Serial.println("Erro no marcador 2");
+         Serial.println(String (erro_marcador_2));
          Serial.println("  ");
-         Serial.println("Erro no marcador 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-         Serial.println("  ");
-         Serial.println("Erro no marcador 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-         Serial.println("  ");
-         erro += " ,Erro no marcador 1, ";
       }
    }
    if( (flag2 == true) && (sensorValuetensao2 < 1) ) {
@@ -165,20 +150,59 @@ void leitura() {
       sensorValue_soma2 = sensorValue2 + sensorValue_soma2;
       
       x++;
-      Serial.print(sensorValue);
-      Serial.print(" | ");
-      Serial.println(sensorValue2);
 
    }
    sensorValue = sensorValue_soma / 10;
    sensorValue2 = sensorValue_soma2 / 10;
 
-   
-   Serial.print(sensorValue);
-   Serial.print(" | ");
-   Serial.print(sensorValue2);
-   Serial.print(" | ");
+}
 
+
+void marcador(String controle){
+   if ( (controle == "LIGADO") && (flag_controle_marcador_ON == false) && (flag_ligado == false) ) {
+      flag_controle_marcador_ON = true;
+      texto_marcador = "\n \n \n \n \n \n \n \n \n \n Data;Hora;sensorValue;sensorValue2;erro marcador 1;erro marcador 2; ||; \n";
+      flag_ligado = true;
+      Serial.println(texto_marcador);
+      delay(1000);
+   } else {
+      if ( (controle == "DESLIGADO") && (flag_controle_marcador_OFF == false) && (flag_ligado == true) ) {
+         flag_controle_marcador_OFF = true;
+         texto_marcador = "\n \n \n \n \n \n \n \n \n \n  ; ; ; ; ; || \n";
+         Serial.println(texto_marcador);
+         delay(1000);
+      } 
+   }
+}
+
+
+void gravar_dados_cartao() {
+   
+   datalogger = SD.open("Tensoes3.svc", FILE_WRITE);
+      if ( datalogger ) {
+         Serial.println("Atualizando datalogger");
+         Serial.print(dados);
+         Serial.println("\n");
+
+         unsigned int tamanho_char = 100;
+         char vetor_dados [tamanho_char] = {""};
+         dados.toCharArray(vetor_dados, tamanho_char);
+
+         for ( int i = 0; i <= tamanho_char; i++){
+            if( vetor_dados[i] == '\n' ){
+               datalogger.println(" ");
+            }
+            datalogger.write(vetor_dados[i]);
+         }
+
+         datalogger.println(" ||;");
+         datalogger.close();
+      } else {
+         Serial.println("Erro ao abrir datalogger");
+      }
+      Serial.println("Atualizado");
+      texto_marcador = "";
+      dados = "";
 }
 
 

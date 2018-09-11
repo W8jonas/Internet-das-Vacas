@@ -30,7 +30,9 @@
  *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
  *  originais, tão bem quanto o nome da instituição.
  *  
-*/
+ *  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/codigo_modos_wifi/codigo_modos_wifi.ino
+ *  
+ */
 
 #include <ESP8266WiFi.h>
 

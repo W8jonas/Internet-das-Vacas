@@ -9,7 +9,7 @@
  * 
  *  Data de início: 13/08/2018
  *  Data da ultima atualização: 02/09/2018
- *  Data de término: XX/XX/2018
+ *  Data de término: 02/09/2018
  *  
  *  Tem o objetivo de estabelecer modelos de operação de economia de energia.
  *  Sendo, no total, 6 funções. A primeira, abilita o ESP em modo standby, a 
@@ -29,6 +29,8 @@
  *  Este código está disponível sempre no endereço abaixo, para livre aperfeiçoamento. 
  *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
  *  originais, tão bem quanto o nome da instituição.
+ *  
+ *  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/codigo_teste_de_consumo_ESP32/codigo_teste_de_consumo_ESP32.ino
  *  
 */
 

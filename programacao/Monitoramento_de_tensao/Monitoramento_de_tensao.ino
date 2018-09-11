@@ -17,7 +17,9 @@
  *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
  *  originais, tão bem quanto o nome da instituição.
  *  
-*/
+ *  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/Monitoramento_de_tensao/Monitoramento_de_tensao.ino
+ *  
+ */
 
 
 #include <DS3231.h>

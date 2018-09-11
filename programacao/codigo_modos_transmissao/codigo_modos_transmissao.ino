@@ -31,6 +31,9 @@
  *  Este código está disponível sempre no endereço abaixo, para livre aperfeiçoamento. 
  *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
  *  originais, tão bem quanto o nome da instituição.
+ *  
+ *  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/codigo_modos_transmissao/codigo_modos_transmissao.ino
+ *  
 */
 
 

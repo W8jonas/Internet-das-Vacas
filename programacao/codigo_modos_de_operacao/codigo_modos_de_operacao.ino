@@ -18,6 +18,12 @@
 //  De tal forma é feito na 6 função, no qual são executadas as operações matemáticas,
 //  mas com todos os LEDs ligados.
 
+//  Este código está disponível sempre no endereço abaixo, para livre aperfeiçoamento. 
+//  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
+//  originais, tão bem quanto o nome da instituição.
+//  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/codigo_modos_de_operacao/codigo_modos_de_operacao.ino
+
+
 
 
 #define Output_1 D8
