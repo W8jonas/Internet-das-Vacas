@@ -42,6 +42,8 @@
 #define tempo_modo_funcionamento 20000
 #define tempo_modo_funcionamento2 25000
 
+#define Pino_transmit D8
+
 extern "C" {
   #include "user_interface.h"
 }
@@ -66,6 +68,9 @@ void setup() {
    WiFi.begin(ssid, password);
    wifi_set_user_fixed_rate(1, 54);
    int contador = 0;
+
+   pinMode(Pino_transmit, OUTPUT);
+   digitalWrite(Pino_transmit, HIGH);
    
    while (WiFi.status() != WL_CONNECTED) {
       contador ++;
@@ -90,9 +95,10 @@ void setup() {
 void loop() {
    unsigned long valor_atual_contador = millis();
    Serial.println(valor_atual_contador);
-   
+   digitalWrite(Pino_transmit, LOW);
    if (valor_atual_contador < tempo_modo_funcionamento) {
       MAX_CPU();
+      digitalWrite(Pino_transmit, LOW);
    }
    
    if ((valor_atual_contador >= tempo_modo_funcionamento) && (valor_atual_contador < tempo_modo_funcionamento2)) {
@@ -147,6 +153,10 @@ void handleNotFound(){
 
 
 void modo_DEEP_SLEEP() {
+   digitalWrite(Pino_transmit, LOW);
+   digitalWrite(Pino_transmit, HIGH);
+   delay(800);
+   digitalWrite(Pino_transmit, LOW);
    Serial.println("Deep-Sleep");
    delay(500);
    ESP.deepSleep(100000000 , WAKE_RF_DEFAULT);

@@ -7,9 +7,9 @@
  * Autor: Jonas Henrique Nascimento
  * PIBIC-Junior
  * 
- * Data de início: 26/08/2018
- * Data da ultima atualização: 03/09/2018
- * Data de término: 02/09/2018
+ * Data de início: 06/09/2018
+ * Data da ultima atualização: 08/09/2018
+ * Data de término: 08/09/2018
  * 
  * 
  *
@@ -24,8 +24,6 @@
 #include <SPI.h>
 #include <SD.h>
 #define chip_select 4
-#define Sinal_1 5
-#define Sinal_2 6
 
 int sensorPin   = A0;
 float sensorValue = 0;
@@ -33,8 +31,21 @@ float sensorValue = 0;
 int sensorPin2   = A1;
 float sensorValue2 = 0;
 
+int sensortensao   = A2;
+float sensorValuetensao = 0;
+
+int sensortensao2   = A3;
+float sensorValuetensao2 = 0;
+
 unsigned int minuto_antigo = 0;
 unsigned int minuto_atual = 0;
+unsigned int marcador_tempo_1 = 0;
+unsigned int marcador_tempo_2 = 0;
+
+bool flag = false;
+bool flag2 = false;
+
+String erro = "sem erros ate agora";
 
 void leitura();
 
@@ -43,10 +54,7 @@ Time  t;
 File datalogger;
 
 void setup() {
-
-   pinMode(Sinal_1, INPUT);
-   pinMode(Sinal_2, INPUT);
-   
+  
    Serial.begin(115200);
    rtc.begin();
    while (!Serial) {;}
@@ -65,17 +73,16 @@ void loop() {
    
    if ( minuto_antigo != minuto_atual ){  
       minuto_antigo = minuto_atual;
-      
       leitura();
-      datalogger = SD.open("Tensoes_2.svc", FILE_WRITE);
+      datalogger = SD.open("Tensoes2.svc", FILE_WRITE);
       if ( datalogger ) {
          Serial.println("Atualizando datalogger");
          Serial.print(rtc.getDateStr());
          Serial.print("  ");
          Serial.println(rtc.getTimeStr());
-         Serial.print("Sensor 1 - ESP32 bateria de 750 mAh......: ");
+         Serial.print("Sensor 1 - ESP 8266 bateria de 750 mAh......: ");
          Serial.println(sensorValue);
-         Serial.print("Sensor 2 - ESP 8266 bateria de 750 mAh...: ");
+         Serial.print("Sensor 2 - ESP 32 bateria de 750 mAh...: ");
          Serial.println(sensorValue2);
          Serial.println(" ");
 //         datalogger.println("Data,Hora,sensorValue,sensorValue2,sensorValue3");
@@ -87,6 +94,7 @@ void loop() {
          datalogger.print(",");
          datalogger.print(sensorValue2);
          datalogger.print(",");
+         datalogger.print(erro);
          datalogger.println(",  ");
          datalogger.close();
       } else {
@@ -95,28 +103,48 @@ void loop() {
       Serial.println("Atualizado");
    }
 
-   if(digitalRead(Sinal_1) == HIGH){
-      if(minuto_atual+3 > marcador_minuto){
-         Serial.println("Erro no ESP 8266");
-         cont_erros_esp8266++;
-         Serial.println("O total de erros foi: ");
-         Serial.println(cont_erros_esp8266);
-         marcador_minuto = minuto_atual;
-         
+   sensorValuetensao = analogRead(sensortensao);
+   sensorValuetensao =(sensorValuetensao * 3.75 ) / 843;
+   if(sensorValuetensao > 1){
+      flag = true;
+      if( marcador_tempo_1 + 3 < minuto_atual ){
+         marcador_tempo_1 = minuto_atual;
+         Serial.println("Erro no marcador 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         Serial.println("  ");
+         Serial.println("Erro no marcador 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         Serial.println("  ");
+         Serial.println("Erro no marcador 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         Serial.println("  ");
+         erro += " ,Erro no marcador 1, ";
       }
    }
 
-   if(digitalRead(Sinal_2) == HIGH){
-     if(minuto_atual+3 > marcador_minuto){
-       Serial.println("Erro no ESP32");
-       cont_erros_esp32 ++;
-       Serial.print("O total de erros foi: ");
-       Serial.println(cont_erros_esp32);
-       marcador_minuto = minuto_atual;
-       
-     }
+   if( (flag == true) && (sensorValuetensao < 1) ) {
+      marcador_tempo_1 = minuto_atual;
+      flag = false;
    }
-   
+
+
+
+   sensorValuetensao2 = analogRead(sensortensao2);
+   sensorValuetensao2 =(sensorValuetensao2 * 3.75 ) / 843;
+   if(sensorValuetensao2 > 1){
+      flag2 = true;
+      if( marcador_tempo_2 + 3 < minuto_atual){
+         marcador_tempo_2 = minuto_atual;
+         Serial.println("Erro no marcador 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         Serial.println("  ");
+         Serial.println("Erro no marcador 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         Serial.println("  ");
+         Serial.println("Erro no marcador 2 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+         Serial.println("  ");
+         erro += " ,Erro no marcador 1, ";
+      }
+   }
+   if( (flag2 == true) && (sensorValuetensao2 < 1) ) {
+      marcador_tempo_2 = minuto_atual;
+      flag2 = false;
+   }
 }
 
 
@@ -137,16 +165,18 @@ void leitura() {
       x++;
       Serial.print(sensorValue);
       Serial.print(" | ");
-      Serial.print(sensorValue2);
+      Serial.println(sensorValue2);
+
    }
-   
    sensorValue = sensorValue_soma / 10;
    sensorValue2 = sensorValue_soma2 / 10;
+
    
    Serial.print(sensorValue);
    Serial.print(" | ");
    Serial.print(sensorValue2);
-   
+   Serial.print(" | ");
+
 }
 
 

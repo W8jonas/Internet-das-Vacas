@@ -38,7 +38,7 @@
 #define tempo_para_desligar 25000
 #define tempo_modo_funcionamento 20000
 #define tempo_modo_funcionamento2 25000
-
+#define Pino_transmit 4
 
 void modo_DEEP_SLEEP();
 void Servidor_ON(unsigned long contador_interno);
@@ -79,6 +79,9 @@ void setup() {
    Serial.print("IP: ");
    Serial.println(WiFi.localIP());
    esp_sleep_enable_timer_wakeup(100000000);
+
+   pinMode(Pino_transmit, OUTPUT);
+   digitalWrite(Pino_transmit, HIGH);
 }
 
 
@@ -157,6 +160,11 @@ void Servidor_ON(unsigned long valor_cont){
 }
 
 void modo_DEEP_SLEEP() {
+   digitalWrite(Pino_transmit, LOW);
+   digitalWrite(Pino_transmit, HIGH);
+   delay(800);
+   digitalWrite(Pino_transmit, LOW);
+  
    Serial.println("Deep-Sleep");
    delay(500);
    esp_deep_sleep_start();
