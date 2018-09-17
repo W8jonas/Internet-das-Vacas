@@ -18,6 +18,8 @@
  *  Todavia, pede-se por educação, que ao compartilharem o código, mantenham os autores
  *  originais, tão bem quanto o nome da instituição.
  *  
+ *  https://github.com/W8jonas/Internet-das-Vacas/blob/master/programacao/Monitoramento_de_tensao_2.1/Monitoramento_de_tensao_2.1.ino
+ *  
 */
 
 
@@ -93,7 +95,7 @@ void loop() {
    if ( minuto_antigo != minuto_atual ){  
       minuto_antigo = minuto_atual;
       leitura();
-      dados = texto_marcador + rtc.getDateStr() + ";" + rtc.getTimeStr() + ";" + sensorValue + ";" + sensorValue2 + ";" + erro_marcador_1 + ";" + erro_marcador_2 + ";";
+      dados = texto_marcador + rtc.getDateStr() + ";" + rtc.getTimeStr() + ";" + sensorValue + ";" + sensorValue2 + ";" + erro_marcador_1 + ";" + erro_marcador_2 + ";*";
       gravar_dados_cartao();
    }
 
@@ -178,7 +180,7 @@ void marcador(String controle){
 
 void gravar_dados_cartao() {
    
-   datalogger = SD.open("Tensoes3.svc", FILE_WRITE);
+   datalogger = SD.open("Tensoes4.svc", FILE_WRITE);
       if ( datalogger ) {
          Serial.println("Atualizando datalogger");
          Serial.print(dados);
@@ -192,9 +194,11 @@ void gravar_dados_cartao() {
             if( vetor_dados[i] == '\n' ){
                datalogger.println(" ");
             }
+            if ( vetor_dados[i] == '*' ) {
+               break;
+            }
             datalogger.write(vetor_dados[i]);
          }
-
          datalogger.println(" ||;");
          datalogger.close();
       } else {

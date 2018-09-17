@@ -8,7 +8,7 @@
  *  PIBIC-Junior
  * 
  *  Data de início: 13/08/2018
- *  Data da ultima atualização: 02/09/2018
+ *  Data da ultima atualização: 15/09/2018
  *  Data de término: 02/09/2018
  *  
  *  Tem o objetivo de estabelecer modelos de operação de economia de energia.
@@ -40,9 +40,9 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-#define tempo_para_desligar 25000
-#define tempo_modo_funcionamento 20000
-#define tempo_modo_funcionamento2 25000
+#define tempo_para_desligar 250000
+#define tempo_modo_funcionamento 200000
+#define tempo_modo_funcionamento2 250000
 
 #define Pino_transmit D8
 
