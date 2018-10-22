@@ -116,7 +116,6 @@ void loop() {
    }
 
 
-
    valor_do_sensor_de_controle_ESP8266 = analogRead(pino_sensor_controle_ESP8266);
    valor_do_sensor_de_controle_ESP8266 =(valor_do_sensor_de_controle_ESP8266 * 3.75 ) / 843;
    if(valor_do_sensor_de_controle_ESP8266 > 2){
@@ -176,7 +175,7 @@ void marcador(String controle){
 
 void gravar_dados_cartao() {
    
-   datalogger = SD.open("2x4.svc", FILE_WRITE);
+   datalogger = SD.open("2x6.svc", FILE_WRITE);
       if ( datalogger ) {
          Serial.println("Atualizando datalogger");
          Serial.print(dados);
