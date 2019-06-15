@@ -1,0 +1,147 @@
+
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{cmap}		
+%\usepackage[utf8]{inputenc}			
+\usepackage[english,brazil]{babel}
+\usepackage{framed}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{indentfirst}
+\usepackage{times}
+\usepackage{textcomp}
+\usepackage{float}
+\usepackage{pgfgantt}
+\usepackage{multirow}
+
+\usepackage{xcolor}
+\definecolor{verde}{rgb}{0,0.5,0}
+
+
+\usepackage[table]{xcolor}
+\usepackage{scalefnt}
+\usepackage{setspace}
+\usepackage{pdfpages}
+\newif\ifblackandwhite
+\blackandwhitetrue
+
+\usepackage{fontspec}%
+\defaultfontfeatures{Ligatures=TeX}%
+\setmainfont[%
+   Numbers        = OldStyle ,
+   ItalicFont     = Times New Roman ,
+   BoldItalicFont = Times New Roman ,
+   BoldFont       = Times New Roman ,
+]{Times New Roman}%
+
+
+\usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
+\usepackage{etoolbox}
+\usepackage{longtable}%
+\AtBeginEnvironment{longtable}{%
+  \addfontfeature{RawFeature=+tnum;-onum}%  <--- requires LuaTeX
+}
+
+\usepackage{pdflscape}
+%\usepackage[svgnames]{xcolor}
+ \usepackage{colortbl}%
+   \newcommand{\myrowcolour}{\rowcolor[gray]{0.925}}
+\usepackage{booktabs}
+
+\ifblackandwhite
+  \newcommand{\cheading}[2]{\textbf{#1\hfill #2}}
+  \newcommand{\highest}[1]{\textbf{#1}}% == highest score for question
+\else
+  \newcommand{\cheading}[2]{\textcolor{Maroon}{\textbf{#1\hfill #2}}}
+  \newcommand{\highest}[1]{\textcolor{Maroon}{\textbf{#1}}}%
+\fi
+
+\definecolor{mygray}{rgb}{0.4,0.4,0.4}
+\definecolor{mygreen}{rgb}{0,0.8,0.6}
+\definecolor{myorange}{rgb}{1.0,0.4,0}
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+  numbers=left,
+  numbersep=12pt,
+  numberstyle=\small\color{mygray},
+}
+\lstset{escapechar=@,style=customc}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\lstset{
+  language=C++,
+  basicstyle=\ttfamily\small, 
+  keywordstyle=\color{blue}, 
+  stringstyle=\color{verde}, 
+  commentstyle=\color{red}, 
+  extendedchars=true, 
+  showspaces=false, 
+  showstringspaces=false, 
+  numbers=left,
+  numberstyle=\tiny,
+  breaklines=true, 
+  backgroundcolor=\color{green!10},
+  breakautoindent=true, 
+  captionpos=b,
+  xleftmargin=0pt,
+}
+
+
+\pagenumbering{arabic}
+
+\begin{document}
+
+\input{sections/Capa_IFMG_modelo_2.tex}
+
+\newpage
+\thispagestyle{empty}
+\begin{abstract}
+    A fuga de animais de suas propriedades para estradas ou propriedades vizinhas é um dos problemas enfrentados por diversos fazendeiros. Uma possível solução para tal problema é o monitoramento da localização desses animais, para que uma medida a fim de proteger o gado seja tomada. Entretanto, as formas de monitoramento ofertadas pelo mercado, atualmente, são de alto consumo e custo, pois se baseiam em tecnologias não voltadas para esta aplicação em específico, tais como: rastreamento por satélite, GPS e por radiofrequência. Com o intuito de aprimorar as opções de mercado e apresentar uma solução ao problema, foram desenvolvidas duas propostas de monitoramento utilizando de uma tecnologia mais viável, com baixo consumo energético. Para tal, foram utilizados chips inteligentes que se comunicam entre si por meio de sinais de rádio Wi-Fi ou Bluetooth. A partir deste ponto, foram estabelecidos dois métodos de solução para o problema: a primeira visa informar ao fazendeiro se o animal está dentro ou fora de sua propriedade, enquanto a segunda visa mostrar a localização aproximada do animal no interior da fazenda, utilizando o conceito de localização por detecção de posição. Com os testes foram constatados precisão acima dos 90\% para ambos os métodos. Para que a forma de monitoramento possua baixo consumo, foi preciso estudar as diferentes tecnologias e suas formas de emprego, para tal, foram realizados inúmeros testes controlados aferindo as diferentes formas de operação dos protótipos. Ademais, foram analisados numerosos modelos de bateria, com a finalidade de encontrar as que correspondiam melhor para seus protótipos. A partir dos dados coletados, foram estimados valores de autonomia de todo o projeto para cada modelo de monitoramento, demonstrando as vantagens e desvantagens de cada modo de operação. Sendo o melhor caso de autonomia próximo a seis meses, mas podendo ser acrescido, caso o produtor agrícola opte por uma bateria de maior porte e consequentemente, maior tamanho. Conclui-se, então, que o projeto pode ser uma opção viável aos fazendeiros como solução ao problema, pois apresenta boa precisão na localização do gado e apresenta alta portabilidade.
+\end{abstract}
+
+{\bfseries Palavras-chave: Internet - GPS - Monitoramento - Gado - Microcontroladores - Baterias}
+
+\newpage
+\tableofcontents
+
+\thispagestyle{empty}
+
+\input{sections/Introducao.tex}
+\input{sections/Objetivos.tex}
+\input{sections/Metodologia.tex}
+\input{sections/Resultados.tex}
+\input{sections/Discussao.tex}
+\input{sections/Continuidade.tex}
+\input{sections/Apendice_A.tex}
+\input{sections/Apendice_B.tex}
+\input{sections/Apendice_C.tex}
+\input{sections/Apendice_D.tex}
+\input{sections/Apendice_E.tex}
+\input{sections/Apendice_F.tex}
+\input{sections/Apendice_G.tex}
+
+
+\newpage
+
+
+\includepdf[pages=-]{Adicionais/referencias.pdf}
+
+\end{document}
